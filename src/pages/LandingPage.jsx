@@ -437,7 +437,7 @@ const LandingPage = () => {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <motion.img
-                  src="/image2.jpg"
+                  src="/image8.jpg"
                   alt="Healthcare monitoring"
                   className="w-full h-auto rounded-2xl"
                   whileHover={{ scale: 1.08 }}
@@ -606,7 +606,7 @@ const LandingPage = () => {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <motion.img
-                  src="/image3.jpg"
+                  src="/image7.jpg"
                   alt="Medical care"
                   className="w-full h-auto rounded-2xl"
                   whileHover={{ scale: 1.08 }}

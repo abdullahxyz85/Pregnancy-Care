@@ -18,9 +18,9 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: Mail, text: "contact@pregnancycare.com" },
-    { icon: Phone, text: "+1 (555) 123-4567" },
-    { icon: MapPin, text: "Health Tech Center, Medical District" },
+    { icon: Mail, text: "contact@carebloom.com" },
+    { icon: Phone, text: "+14155238886" },
+    { icon: MapPin, text: "Pregnancy Health Centre" },
   ];
 
   return (
