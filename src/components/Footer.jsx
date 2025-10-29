@@ -39,7 +39,7 @@ const Footer = () => {
               <div className="bg-primary-600 p-2 rounded-lg">
                 <Heart className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold">PregnancyCare</span>
+              <span className="text-xl font-bold">CareBloom</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
               Advanced AI-powered pregnancy risk assessment system designed to
@@ -123,7 +123,7 @@ const Footer = () => {
           viewport={{ once: true }}
         >
           <p className="text-gray-400 text-sm">
-            © 2024 PregnancyCare. All rights reserved.
+            © 2024 CareBloom. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 md:mt-0">
             Made with ❤️ for better maternal healthcare
