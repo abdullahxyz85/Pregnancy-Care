@@ -12,31 +12,35 @@ const LandingPage = () => {
   const features = [
     {
       icon: Heart,
-      title: "AI-Powered Assessment",
+      title: "Model A – Pregnancy Risk Prediction",
       description:
-        "Advanced machine learning algorithms analyze multiple health parameters to provide accurate risk assessments.",
+        "XGBoost algorithm trained on Maternal Health Risk Dataset with 85.25% accuracy. Determines pregnancy risk levels (Low, Mid, High) and triggers further evaluation when needed.",
       color: "bg-red-500",
+      details: "Dataset: Kaggle | Algorithm: XGBoost | Accuracy: 85.25%",
     },
     {
       icon: Shield,
-      title: "Real-time Monitoring",
+      title: "Model B – Pre-eclampsia Detection",
       description:
-        "Continuous monitoring and instant alerts help ensure the safety of both mother and baby.",
+        "Random Forest algorithm optimized with Grid Search CV achieving 95.12% accuracy. Activates only for high-risk cases to detect disease probability and severity levels.",
       color: "bg-blue-500",
+      details: "Dataset: Kaggle | Algorithm: Random Forest | Accuracy: 95.12%",
     },
     {
       icon: Activity,
-      title: "Health Analytics",
+      title: "AI-Based Medical Advice",
       description:
-        "Comprehensive health data analysis provides insights for better prenatal care decisions.",
+        "Powered by Groq API's LLaMA 3.1 8B Instant model to generate empathetic, personalized health advice based on assessment results. Simple guidance tailored to each patient's condition.",
       color: "bg-green-500",
+      details: "API: Groq LLaMA 3.1 8B | Smart & Empathetic Responses",
     },
     {
       icon: Users,
-      title: "Healthcare Integration",
+      title: "WhatsApp Alert System",
       description:
-        "Seamlessly integrates with existing healthcare systems for streamlined patient care.",
+        "Automated WhatsApp notifications via Twilio API send customized risk alerts to patients or healthcare providers instantly, ensuring timely medical intervention.",
       color: "bg-purple-500",
+      details: "Integration: Twilio WhatsApp API | Real-time Alerts",
     },
   ];
 
@@ -74,7 +78,10 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section id="home" className="gradient-bg pt-20 pb-16 overflow-hidden relative">
+      <section
+        id="home"
+        className="gradient-bg pt-20 pb-16 overflow-hidden relative"
+      >
         {/* Animated background particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
@@ -124,9 +131,10 @@ const LandingPage = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
               >
-                Empowering healthcare providers with AI-driven insights for
-                safer pregnancies. Monitor, analyze, and respond to potential
-                risks in real-time.
+                CareBloom is an intelligent maternal health assistant that
+                predicts pregnancy risk, detects Pre-eclampsia, and provides
+                instant AI-powered medical advice with WhatsApp alerts for
+                critical cases
               </motion.p>
               <motion.div
                 className="flex flex-col sm:flex-row gap-4"
@@ -152,7 +160,11 @@ const LandingPage = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Button variant="outline" size="lg" className="hover:shadow-lg transition-shadow">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="hover:shadow-lg transition-shadow"
+                  >
                     Watch Demo
                   </Button>
                 </motion.div>
@@ -324,7 +336,7 @@ const LandingPage = () => {
                       className="absolute inset-0 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-gray-800 dark:to-gray-900 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.3 }}
                     />
-                    
+
                     <div className="relative z-10">
                       <motion.div
                         className={`${feature.color} w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg relative`}
@@ -357,16 +369,26 @@ const LandingPage = () => {
                           }}
                         />
                       </motion.div>
-                      
+
                       <motion.h3
                         className="text-xl font-semibold text-gray-900 dark:text-white mb-3"
                         whileHover={{ scale: 1.05 }}
                       >
                         {feature.title}
                       </motion.h3>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-gray-600 dark:text-gray-300 mb-3">
                         {feature.description}
                       </p>
+                      {feature.details && (
+                        <motion.p
+                          className="text-sm font-medium text-primary-600 dark:text-primary-400 border-t border-gray-200 dark:border-gray-700 pt-3 mt-3"
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          {feature.details}
+                        </motion.p>
+                      )}
                     </div>
                   </Card>
                 </motion.div>
@@ -537,7 +559,7 @@ const LandingPage = () => {
                       className="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100"
                       transition={{ duration: 0.3 }}
                     />
-                    
+
                     <div className="relative z-10">
                       <motion.div
                         className="text-3xl font-bold text-primary-600 mb-1"
@@ -549,12 +571,16 @@ const LandingPage = () => {
                         {stat.label}
                       </div>
                     </div>
-                    
+
                     {/* Corner accent */}
                     <motion.div
                       className="absolute -right-2 -top-2 w-16 h-16 bg-primary-500/10 rounded-full"
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                     />
                   </motion.div>
                 ))}

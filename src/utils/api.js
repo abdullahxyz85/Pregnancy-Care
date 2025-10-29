@@ -17,7 +17,11 @@ export const pregnancyAPI = {
   predict: (data) => api.post("/predict/", data),
 
   // Send WhatsApp alert
-  sendAlert: (riskLevel) => api.post("/send_alert/", { Risk_Level: riskLevel }),
+  sendAlert: (riskLevel, phoneNumber = null) =>
+    api.post("/send_alert/", {
+      Risk_Level: riskLevel,
+      phone_number: phoneNumber,
+    }),
 };
 
 export default api;

@@ -7,6 +7,7 @@ import {
   Calendar,
   User,
   Activity,
+  Phone,
 } from "lucide-react";
 import { pregnancyAPI } from "../utils/api";
 import toast, { Toaster } from "react-hot-toast";
@@ -36,6 +37,9 @@ const AssessmentPage = () => {
     amniotic_fluid_levels: "",
   });
 
+  const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [showWhatsAppInstructions, setShowWhatsAppInstructions] =
+    useState(false);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sendingAlert, setSendingAlert] = useState(false);
@@ -74,29 +78,6 @@ const AssessmentPage = () => {
       setResult(response.data);
 
       toast.success("Assessment completed successfully!");
-
-      // Automatically send WhatsApp alert for high and mid-risk cases
-      if (
-        response.data.Risk_Level === "high risk" ||
-        response.data.Risk_Level === "mid risk"
-      ) {
-        try {
-          const alertResponse = await pregnancyAPI.sendAlert(
-            response.data.Risk_Level
-          );
-          if (alertResponse.data.sid) {
-            toast.success(`📱 WhatsApp alert sent to +923265979199!`, {
-              duration: 5000,
-              icon: "📨",
-            });
-          }
-        } catch (alertError) {
-          console.error("Auto-alert error:", alertError);
-          toast.error(
-            "Assessment complete, but failed to send WhatsApp alert."
-          );
-        }
-      }
     } catch (error) {
       console.error("Prediction error:", error);
       toast.error("Failed to process assessment. Please try again.");
@@ -107,11 +88,15 @@ const AssessmentPage = () => {
 
   const sendAlert = async () => {
     if (!result) return;
+    if (!whatsappNumber) {
+      toast.error("Please enter a WhatsApp number first!");
+      return;
+    }
 
     setSendingAlert(true);
     try {
-      await pregnancyAPI.sendAlert(result.Risk_Level);
-      toast.success("Alert sent successfully!");
+      await pregnancyAPI.sendAlert(result.Risk_Level, whatsappNumber);
+      toast.success(`Alert sent successfully to ${whatsappNumber}!`);
     } catch (error) {
       console.error("Alert error:", error);
       toast.error("Failed to send alert. Please try again.");
@@ -378,6 +363,83 @@ const AssessmentPage = () => {
                   </div>
                 </div>
 
+                {/* WhatsApp Alert Section */}
+                <div className="border-t border-gray-200 dark:border-gray-700 pt-6 mt-6">
+                  <div className="flex items-center space-x-2 mb-4">
+                    <Send className="w-5 h-5 text-primary-600" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      WhatsApp Alert (Optional)
+                    </h3>
+                  </div>
+
+                  <Input
+                    label="WhatsApp Number"
+                    name="whatsappNumber"
+                    type="text"
+                    value={whatsappNumber}
+                    onChange={(e) => {
+                      setWhatsappNumber(e.target.value);
+                      if (e.target.value && !showWhatsAppInstructions) {
+                        setShowWhatsAppInstructions(true);
+                      }
+                    }}
+                    placeholder="+923001234567"
+                    helperText="Enter with country code (e.g., +923001234567)"
+                  />
+
+                  {showWhatsAppInstructions && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg"
+                    >
+                      <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-3 flex items-center">
+                        📱 Steps to Connect WhatsApp:
+                      </h4>
+                      <ol className="space-y-2 text-sm text-blue-800 dark:text-blue-200">
+                        <li className="flex items-start">
+                          <span className="font-bold mr-2 flex-shrink-0">
+                            1️⃣
+                          </span>
+                          <span>
+                            Send <strong>"join guide-being"</strong> to{" "}
+                            <strong className="text-blue-600 dark:text-blue-400">
+                              +1 415 523 8886
+                            </strong>{" "}
+                            on WhatsApp
+                          </span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="font-bold mr-2 flex-shrink-0">
+                            2️⃣
+                          </span>
+                          <span>
+                            After joining, enter your number above (e.g.,{" "}
+                            <code className="bg-blue-100 dark:bg-blue-800 px-1 rounded">
+                              +923001234567
+                            </code>
+                            )
+                          </span>
+                        </li>
+                        <li className="flex items-start">
+                          <span className="font-bold mr-2 flex-shrink-0">
+                            3️⃣
+                          </span>
+                          <span>
+                            Complete the assessment and you'll receive instant
+                            alerts for high or mid-risk cases
+                          </span>
+                        </li>
+                      </ol>
+                      <div className="mt-3 p-2 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 text-xs text-yellow-800 dark:text-yellow-200">
+                        ⚠️ <strong>Important:</strong> You must join the Twilio
+                        sandbox first, or you won't receive alerts!
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+
                 <div className="pt-6">
                   <Button
                     type="submit"
@@ -422,7 +484,7 @@ const AssessmentPage = () => {
                   </div>
 
                   {/* Disease Status */}
-                  {result.Disease_Status && result.Disease_Status !== "N/A" && (
+                  {result.Disease_Status && (
                     <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                       <h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
                         Disease Status

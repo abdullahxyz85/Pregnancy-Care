@@ -123,7 +123,7 @@ const Footer = () => {
           viewport={{ once: true }}
         >
           <p className="text-gray-400 text-sm">
-            © 2024 CareBloom. All rights reserved.
+            © 2025 CareBloom. All rights reserved.
           </p>
           <p className="text-gray-400 text-sm mt-2 md:mt-0">
             Made with ❤️ for better maternal healthcare

@@ -13,7 +13,7 @@ const Navbar = () => {
     { name: "Home", href: "/" },
     { name: "Assessment", href: "/assessment" },
     { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    // { name: "Contact", href: "#contact" },
   ];
 
   const isActive = (href) => {
