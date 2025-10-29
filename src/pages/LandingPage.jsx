@@ -185,7 +185,7 @@ const LandingPage = () => {
                   style={{ transformStyle: "preserve-3d" }}
                 >
                   <motion.img
-                    src="/image1.jpg"
+                    src="/image6.jpg"
                     alt="Pregnancy care"
                     className="w-full h-full object-cover"
                     loading="eager"
